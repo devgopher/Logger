@@ -3,7 +3,7 @@
  * Дата: 21.05.2014
  * Время: 13:52
  */
- 
+
 using System;
 using System.IO;
 using System.Text;
@@ -220,7 +220,7 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Writes a simple entry
+		/// Outputs a simple entry
 		/// </summary>
 		/// <param name="content"></param>
 		public void WriteEntry( string content )
@@ -234,7 +234,7 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Writes a debug message
+		/// Outputs a debug message
 		/// </summary>
 		/// <param name="content"></param>
 		public void WriteDebug( string content )
@@ -248,7 +248,7 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Writes an error message
+		/// Outputs an error message
 		/// </summary>
 		/// <param name="content"></param>
 		public void WriteError( string content )
@@ -262,7 +262,21 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Writes an error message
+		/// Outputs a FATAL error message
+		/// </summary>
+		/// <param name="content"></param>
+		public void WriteFatal( string content )
+		{
+			log_text+="\r\n "+content;
+			foreach ( var log_elem in log_elements ) {
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_FATAL_ERROR"),
+				                ConsoleColor.DarkRed );
+			}
+		}
+		
+		/// <summary>
+		/// Outputs an error message
 		/// </summary>
 		/// <param name="exception"></param>
 		public void WriteError( Exception exception )
@@ -285,7 +299,7 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Writes a warning message
+		/// Outputs a warning message
 		/// </summary>
 		/// <param name="content"></param>
 		public void WriteWarning(string content)

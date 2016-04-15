@@ -16,6 +16,7 @@ namespace LoggerTest
 			for ( int k =0 ; k < 100 ; ++k) {
 				logger.WriteEntry("THREAD #"+thread_number.ToString());
 				logger.WriteError("THREAD #"+thread_number.ToString());
+				logger.WriteFatal("THREAD #"+thread_number.ToString());
 				logger.WriteWarning("THREAD #"+thread_number.ToString());
 				logger.WriteDebug("THREAD #"+thread_number.ToString());
 				logger.WriteDebug("THREAD #"+thread_number.ToString()+" k= "+k.ToString());
@@ -25,7 +26,7 @@ namespace LoggerTest
 		public static void Main(string[] args)
 		{
 			logger = Logger.Logger.GetInstance(".", "out.log");
-			int threads_cnt = 100;
+			const int threads_cnt = 100;
 			
 			Thread[] threads = new Thread[threads_cnt];
 			System.Threading.ThreadPool.SetMaxThreads( 30 * Environment.ProcessorCount, 2 );
