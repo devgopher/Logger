@@ -63,7 +63,7 @@ namespace Logger
 						}
 					}
 				}
-			} catch ( IOException ex ) {
+			} catch ( IOException ) {
 				var rand = new Random(DateTime.Now.Millisecond);
 				var new_path = Path + "_" + rand.Next().ToString();
 				while (File.Exists(new_path)) {
