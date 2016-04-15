@@ -68,6 +68,9 @@
     <Compile Include="Utils\Sendmail.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LGPL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\build_resources.bat" />
     <None Include="Resources\CommonStrings.en.txt" />
     <None Include="Resources\CommonStrings.ru.txt" />
