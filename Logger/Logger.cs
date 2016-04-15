@@ -301,7 +301,7 @@ namespace Logger
 		#region IDisposable
 		public void Dispose()
 		{
-			WriteEntry("Exit");
+			WriteEntry(StaticResourceManager.GetStringResource("LOGGER_EXIT_MSG"));
 		}
 		#endregion
 	}
