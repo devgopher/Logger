@@ -83,12 +83,17 @@ namespace Logger
 			string path = null;
 			Encoding encoding = null;
 
-			if ( pars != null  ) {
+			if ( pars != null ) {
 				if ( pars.Length >= 1 ) {
 					encoding = pars[0] as Encoding;
 					if ( pars.Length == 2 )
 						path =  pars[1] as String;
 				}
+				
+				if ( path == null )
+					throw new IOException( "Filepath isn't defined!" );
+				if ( encoding == null )
+					throw new IOException( "Encoding isn't defined!" );				
 				
 				if ( !instances.ContainsKey( path ) ) {
 					var instance = new FileLogElement();
@@ -101,7 +106,7 @@ namespace Logger
 				return instances[path];
 				
 			}
-			throw new IOException( "Filepath isn't defined!" );
+			throw new IOException( "Filelog parameters aren't defined!" );
 		}
 		
 		protected static Dictionary<String, FileLogElement> instances =

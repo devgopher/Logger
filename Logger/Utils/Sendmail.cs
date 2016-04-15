@@ -39,7 +39,8 @@ namespace Utils
 		}
 		
 		public static void SendText(string subject,
-		                            string text, List<string> recipients,
+		                            string text, 
+		                            List<string> recipients,
 		                            string user_name,
 		                            string user_pwd,
 		                            string server,
