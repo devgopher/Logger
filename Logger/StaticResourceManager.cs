@@ -17,16 +17,15 @@ namespace Global
 	/// </summary>
 	public static class StaticResourceManager
 	{
-		private static readonly List<ResourceManager> resource_mgrs = 
+		private static readonly List<ResourceManager> resource_mgrs =
 			new List<ResourceManager>();
 		
-		private static readonly string appdir = 
+		private static readonly string appdir =
 			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		
 		private static List<string> FindResourceTitles() {
-			resource_mgrs.Clear();
 			var ret = new List<string>();
-			var resources_dir = Path.Combine(appdir,"Resources");
+			var resources_dir = Path.Combine(appdir, "Resources");
 			
 			var files = Directory.GetFiles( resources_dir, "*.resources" );
 			const string regex_pattern = @"(.*)\.(.*)\.(.*)";
@@ -45,14 +44,13 @@ namespace Global
 		static StaticResourceManager()
 		{
 			var resource_titles = FindResourceTitles();
-
+			
 			foreach ( var rt in resource_titles ) {
-				var string_manager = ResourceManager.CreateFileBasedResourceManager( rt,
-				                                                                    appdir +
-				                                                                    Path.DirectorySeparatorChar+
-				                                                                    "Resources",
-				                                                                    null
-				                                                                   );
+				var string_manager = ResourceManager
+					.CreateFileBasedResourceManager( rt,
+					                                Path.Combine( appdir, "Resources" ),
+					                                null
+					                               );
 				resource_mgrs.Add( string_manager );
 			}
 		}

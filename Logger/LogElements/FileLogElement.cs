@@ -50,20 +50,22 @@ namespace Logger
 				
 				lock ( sync_object ) {
 					if (!File.Exists(Path)) {
-						using (log_fs = File.Open(Path, FileMode.CreateNew)) {
+						using (log_fs = File.Open(Path, FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite)) {
 							using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
 								log_sw.WriteLine(content);
+								log_sw.Flush();
 							}
 						}
 					} else {
-						using (log_fs = File.Open(Path, FileMode.Append)) {
+						using (log_fs = File.Open(Path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
 							using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
 								log_sw.WriteLine(content);
+								log_sw.Flush();
 							}
 						}
 					}
 				}
-			} catch ( IOException ) {
+			} catch ( IOException ex ) {
 				var rand = new Random(DateTime.Now.Millisecond);
 				var new_path = Path + "_" + rand.Next().ToString();
 				while (File.Exists(new_path)) {

@@ -11,25 +11,40 @@ namespace LoggerTest
 	class Program
 	{
 		static Logger.Logger logger = null;
+		static Logger.Logger logger1 = null;
+		static int random_num = 0;
+		
 		private static void ThreadProc( object state ) {
 			int thread_number = (int)state;
 			for ( int k =0 ; k < 100 ; ++k) {
-				logger.WriteEntry("THREAD #"+thread_number.ToString());
-				logger.WriteError("THREAD #"+thread_number.ToString());
-				logger.WriteFatal("THREAD #"+thread_number.ToString());
-				logger.WriteWarning("THREAD #"+thread_number.ToString());
-				logger.WriteDebug("THREAD #"+thread_number.ToString());
-				logger.WriteDebug("THREAD #"+thread_number.ToString()+" k= "+k.ToString());
+				logger.WriteEntry(random_num + "-THREAD #"+thread_number.ToString());
+				logger.WriteError(random_num + "-THREAD #"+thread_number.ToString());
+				logger.WriteFatal(random_num + "-THREAD #"+thread_number.ToString());
+				logger.WriteWarning(random_num + "-THREAD #"+thread_number.ToString());
+				logger.WriteDebug(random_num + "-THREAD #"+thread_number.ToString());
+				logger.WriteDebug(random_num + "-THREAD #"+thread_number.ToString()+" k= "+k.ToString());
+				Thread.Sleep(50);
+				logger1.WriteEntry(random_num + "-1THREAD #"+thread_number.ToString());
+				logger1.WriteError(random_num + "-1THREAD #"+thread_number.ToString());
+				logger1.WriteFatal(random_num + "-1THREAD #"+thread_number.ToString());
+				logger1.WriteWarning(random_num + "-1THREAD #"+thread_number.ToString());
+				logger1.WriteDebug(random_num + "-1THREAD #"+thread_number.ToString());
+				logger1.WriteDebug(random_num + "-1THREAD #"+thread_number.ToString()+" k= "+k.ToString());
 			}
 		}
 		
 		public static void Main(string[] args)
 		{
-			logger = Logger.Logger.GetInstance(".", "out.log");
+			random_num = (new Random((DateTime.Now.Millisecond))).Next();
+			Logger.Logger.IsSingle = false;
+			logger = Logger.Logger.GetInstance(@".\logs", "out.log");
+			logger1 = Logger.Logger.GetInstance(@".\logs", "out.log");
+
 			const int threads_cnt = 100;
+
 			
 			Thread[] threads = new Thread[threads_cnt];
-			System.Threading.ThreadPool.SetMaxThreads( 30 * Environment.ProcessorCount, 2 );
+			ThreadPool.SetMaxThreads( 100 * Environment.ProcessorCount, 20 );
 			Logger.Logger.IsSingle = true;
 			Console.WriteLine("A multithread test for Logger!");
 			for ( int i = 0 ; i < threads_cnt; ++i ) {
