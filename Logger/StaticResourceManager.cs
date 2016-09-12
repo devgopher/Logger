@@ -9,6 +9,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Globalization;
 
 namespace Global
 {
@@ -22,6 +23,8 @@ namespace Global
 		
 		private static readonly string appdir =
 			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		
+		private static CultureInfo currentCulture = CultureInfo.CurrentCulture;
 		
 		private static List<string> FindResourceTitles() {
 			var ret = new List<string>();
@@ -55,9 +58,13 @@ namespace Global
 			}
 		}
 		
+		public static void SetCulture( CultureInfo culture ) {
+			currentCulture = culture;
+		}
+		
 		public static string GetStringResource( string res_name ) {
 			foreach ( var rm in resource_mgrs ) {
-				var tmp = rm.GetString( res_name );
+				var tmp = rm.GetString( res_name, currentCulture );
 				if ( tmp != null )
 					return tmp;
 			}
@@ -66,7 +73,7 @@ namespace Global
 
 		public static Object GetObjectResource( string res_name ) {
 			foreach ( var rm in resource_mgrs ) {
-				var tmp = rm.GetObject( res_name );
+				var tmp = rm.GetObject( res_name, currentCulture );
 				if ( tmp != null )
 					return tmp;
 			}

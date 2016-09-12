@@ -65,7 +65,8 @@ namespace Logger
 			IsSingle = is_single;
 			StartLog();
 			WriteEntry("Start logging...");
-		}
+		}	
+		
 		
 		/// <summary>
 		/// Adds a new log output element
